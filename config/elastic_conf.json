@@ -1,5 +1,5 @@
 {
-  "indexName": "test_en",
+  "indexName": "wikivoyage_en",
   "docType": "wikipage",
   "insertBulkSize": 100,
   "mapping": "mapping.json",
@@ -7,6 +7,8 @@
   "host": "localhost",
   "port": 9200,
   "scheme": "http",
+  "username": "elastic",
+  "password": "changeme",
   "shards": 1,
   "replicas": 0
 }

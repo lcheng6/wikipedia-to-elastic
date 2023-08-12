@@ -6,6 +6,8 @@ package wiki.persistency;
 
 import com.google.gson.Gson;
 import org.apache.http.HttpHost;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.elasticsearch.ElasticsearchException;
@@ -37,6 +39,9 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import wiki.config.ElasticConfiguration;
 import wiki.data.WikiDataParsedPage;
 import wiki.data.WikipediaParsedPage;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.Credentials;
+import org.apache.http.auth.UsernamePasswordCredentials;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -78,11 +83,20 @@ public class ElasticAPI implements IAPI<AcknowledgedResponse> {
         }
 
         // init elastic client
+        final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+        credentialsProvider.setCredentials(AuthScope.ANY,
+                new UsernamePasswordCredentials(configuration.getUsername(), configuration.getPassword()));
         this.client = new RestHighLevelClient(
                 RestClient.builder(
                         new HttpHost(configuration.getHost(),
                                 configuration.getPort(),
-                                configuration.getScheme())));
+                                configuration.getScheme()))
+                        .setHttpClientConfigCallback(httpAsyncClientBuilder -> {
+                            httpAsyncClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
+                            return httpAsyncClientBuilder;
+                            }
+                        )
+        );
     }
 
     @Override

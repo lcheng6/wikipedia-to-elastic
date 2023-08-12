@@ -1,7 +1,7 @@
 {
   "exportMethod": "elastic",
   "extractRelationFields": false,
-  "wikipediaDump": "dumps/tinywiki-latest-pages-articles.xml.bz2",
+  "wikipediaDump": "dumps/enwikivoyage-20230720-pages-articles-multistream.xml.bz2",
   "lang": "en",
   "includeRawText" : false,
   "includeParsedParagraphs": true,

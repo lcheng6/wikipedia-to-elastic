@@ -15,6 +15,8 @@ public class ElasticConfiguration {
     private String host;
     private String scheme;
     private int port;
+    private String username;
+    private String password;
     private int shards;
     private int replicas;
     private int insertBulkSize;
@@ -69,6 +71,12 @@ public class ElasticConfiguration {
     public void setPort(int port) {
         this.port = port;
     }
+
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
+
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 
     public int getShards() {
         return shards;
